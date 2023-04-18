@@ -14,13 +14,14 @@
 #'
 #' @examples
 #' data(input)
-#' kaplanMeier_PFSr(data = data, delta = 1.3)
+#' input$ratio <- input$PFS2/input$PFS1
+#' kaplanMeier_PFSr(data = input, delta = 1.3)
 kaplanMeier_PFSr <- function(data, 
                              delta = 1,
                              plot = FALSE) {
   
   # Check if required columns are present
-  check_columns(data = data, required_columns = c("PFS1", "PFS2", "status"))
+  check_columns(data = data, required_columns = c("PFS1", "PFS2", "status", "ratio"))
   
   obj_survfit <- survival::survfit(survival::Surv(ratio, data$status) ~ 1, data = data)
   
@@ -35,7 +36,7 @@ kaplanMeier_PFSr <- function(data,
   
   res_list <- list(PFSr_summary = res_summary, PFSr_estimator = res_stats)
   
-   if(plot == TRUE){
+   if(plot == TRUE) {
      
       plot_km <- survminer::ggsurvplot(obj_survfit, data = data,
                             legend = "none",

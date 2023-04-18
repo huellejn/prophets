@@ -19,5 +19,5 @@ Plot cumulative hazard ratio
 }
 \examples{
 data(input)
-plot_cumHaz(data = data, selected_PFS = "PFS2")
+plot_cumHaz(data = input, selected_PFS = "PFS2")
 }

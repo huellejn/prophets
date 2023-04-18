@@ -7,15 +7,19 @@
 #' @return A plot of the correlation between PFS1 and PFS2.
 #' @export
 #' @importFrom parfm tau
-#' @importFrom ggplot2 ggplot
-#' @importFrom dplyr mutate
+#' @importFrom ggplot2 ggplot aes geom_point scale_color_manual theme_bw theme labs annotate scale_x_continuous scale_y_continuous
+#' @importFrom dplyr mutate 
 #'
 #' @examples
 #' data(input)
-#' plot_correlation_PFS(data = data, delta = 1.3, log_scale = TRUE)
+#' input$ratio <- input$PFS2/input$PFS1
+#' plot_correlation_PFS(data = input, delta = 1.3, log_scale = TRUE)
 plot_correlation_PFS <- function(data, 
                                  delta = 1,
                                  log_scale = FALSE) {
+  
+  # Check if required columns are present
+  check_columns(data = data, required_columns = c("status", "ratio"))
   
   glm <- correlate_PFS(data, delta = delta)
   

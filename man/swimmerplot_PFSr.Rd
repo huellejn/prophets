@@ -19,5 +19,6 @@ Swimmer plot for individual PFS values
 }
 \examples{
 data(input)
-swimmerplot_PFSr(data = data, delta = 1.3)
+input$ratio <- input$PFS2/input$PFS1
+swimmerplot_PFSr(data = input, delta = 1.3)
 }

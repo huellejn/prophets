@@ -21,5 +21,6 @@ Analysis of progression free survival ratio (PFSr) using the count-based method
 }
 \examples{
 data(input)
-count_PFSr(data = data)
+input$ratio <- input$PFS2/input$PFS1
+count_PFSr(data = input)
 }

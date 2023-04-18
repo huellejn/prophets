@@ -17,5 +17,5 @@ Plot Weibull distribution for PFS values
 }
 \examples{
 data(input)
-plot_weibull(data = data)
+plot_weibull(data = input)
 }

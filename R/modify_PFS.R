@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' data(input)
-#' modify_PFS(data = data, delta = 1.3, min_pfs2 = 6)
+#' modify_PFS(data = input, delta = 1.3, min_pfs2 = 6)
 modify_PFS <- function(data, delta = 1, min_pfs2 = 6) {
   
   # Check if required columns are present

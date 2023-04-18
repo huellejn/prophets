@@ -19,5 +19,5 @@ Calculate the correlation between PFS1 and PFS2
 }
 \examples{
 data(input)
-correlate_PFS(data = data, delta = 1.3)
+correlate_PFS(data = input, delta = 1.3)
 }

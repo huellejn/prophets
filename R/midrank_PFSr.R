@@ -9,7 +9,7 @@
 #'
 #' @examples
 #' data(input)
-#' midrank_PFSr(data = data, delta = 1.3)
+#' midrank_PFSr(data = input, delta = 1.3)
 midrank_PFSr <- function(data,  
                          delta = 1 ) {
   

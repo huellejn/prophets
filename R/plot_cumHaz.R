@@ -5,12 +5,12 @@
 #'
 #' @return A plot of the cumulative hazard ratio.
 #' @export
-#' @importFrom survminer surv_fit ggsurvplot
+#' @importFrom survminer surv_fit ggsurvplot theme_survminer
 #' @importFrom survival Surv
 #'
 #' @examples
 #' data(input)
-#' plot_cumHaz(data = data, selected_PFS = "PFS2")
+#' plot_cumHaz(data = input, selected_PFS = "PFS2")
 plot_cumHaz <- function(data,  
                         selected_PFS = c("PFS1", "PFS2") 
                         ) {
@@ -43,7 +43,7 @@ plot_cumHaz <- function(data,
     xlab = "Time (months)", ylab = "Cumulative hazard",
     legend = "none",
     conf.int = FALSE,
-    ggtheme = theme_survminer(font.main = 18),
+    ggtheme = survminer::theme_survminer(font.main = 18),
     palette = ifelse(selected_PFS == "PFS1", "#224DA9", ifelse(selected_PFS == "PFS2", "#E5703D", c("#224DA9", "#E5703D"))),
     break.time.by = 3,
     xlim = c(0, 24), 

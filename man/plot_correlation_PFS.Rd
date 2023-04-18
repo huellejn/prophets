@@ -21,5 +21,6 @@ Plot the correlation of PFS values
 }
 \examples{
 data(input)
-plot_correlation_PFS(data = data, delta = 1.3, log_scale = TRUE)
+input$ratio <- input$PFS2/input$PFS1
+plot_correlation_PFS(data = input, delta = 1.3, log_scale = TRUE)
 }

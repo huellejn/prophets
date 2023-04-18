@@ -9,10 +9,11 @@
 #' @param model a factor with levels c("GBVE", "Weibull"). Indicates the model used for the calculation.
 #' @param verbose logical value. If TRUE, results output is in text format.
 #'
-#' @return
+#' @return the calculated required sample size for the defined parameters
 #' @export
 #'
 #' @examples
+#' PFSr_power_calculate(sample_size = 65, null_HR = 1, alt_HR = 1.3, rho = 0.1, model = "GBVE")
 PFSr_power_calculate <- function(sample_size = NULL, 
                                  null_HR = 1,
                                  alt_HR = NULL, 

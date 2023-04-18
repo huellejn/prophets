@@ -5,7 +5,7 @@
 #' @param alpha a numeric value. Probability (range 0.01-1.00)
 #' @param verbose logical value. If TRUE, results output is in text format.
 #'
-#' @return
+#' @return the calculated required sample size for the defined parameters
 #' @export
 #'
 #' @examples

@@ -10,7 +10,7 @@
 #'
 #' @examples
 #' data(input)
-#' test_weibull_distribution(data = data, tidy = TRUE)
+#' test_weibull_distribution(data = input, tidy = TRUE)
 test_weibull_distribution <- function(data, tidy = TRUE) {
   
   # Check if required columns are present
@@ -20,8 +20,8 @@ test_weibull_distribution <- function(data, tidy = TRUE) {
   wei2 <- survival::survreg(survival::Surv(data$PFS2, data$status) ~ 1, dist = 'weibull', data = data)
   
   if(tidy == TRUE) {
-    wei1 <- broom:tidy(wei1)
-    wei2 <- broom:tidy(wei2)
+    wei1 <- broom::tidy(wei1)
+    wei2 <- broom::tidy(wei2)
   }
   
   l_res <- list(

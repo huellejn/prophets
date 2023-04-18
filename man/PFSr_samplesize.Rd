@@ -36,7 +36,7 @@ PFSr_samplesize(
 \item{verbose}{if TRUE, results output is in text format}
 }
 \value{
-a dataframe with the calculated required sample size for the
+the calculated required sample size for the defined parameters
 }
 \description{
 Study sample size calculation

@@ -10,7 +10,7 @@
 #' @param model a factor with levels c("GBVE", "Weibull"). Indicates the model used for the calculation.
 #' @param verbose if TRUE, results output is in text format
 #'
-#' @return a dataframe with the calculated required sample size for the 
+#' @return the calculated required sample size for the defined parameters
 #' @export
 #'
 #' @examples

@@ -32,6 +32,12 @@ PFSr_power_calculate(
 
 \item{verbose}{logical value. If TRUE, results output is in text format.}
 }
+\value{
+the calculated required sample size for the defined parameters
+}
 \description{
 Study power calculation
+}
+\examples{
+PFSr_power_calculate(sample_size = 65, null_HR = 1, alt_HR = 1.3, rho = 0.1, model = "GBVE")
 }

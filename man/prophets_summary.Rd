@@ -19,5 +19,6 @@ Title
 }
 \examples{
 data(input)
-prophets_summary(data = data, delta = 1.3)
+input$ratio <- input$PFS2/input$PFS1
+prophets_summary(data = input, delta = 1.3)
 }

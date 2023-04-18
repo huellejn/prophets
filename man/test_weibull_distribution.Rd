@@ -19,5 +19,5 @@ Test if the PFS values follow a Weibull distribution
 }
 \examples{
 data(input)
-test_weibull_distribution(data = data, tidy = TRUE)
+test_weibull_distribution(data = input, tidy = TRUE)
 }

@@ -21,5 +21,6 @@ Analysis of progression free survival ratio (PFSr) using the Kaplan-Meier method
 }
 \examples{
 data(input)
-kaplanMeier_PFSr(data = data, delta = 1.3)
+input$ratio <- input$PFS2/input$PFS1
+kaplanMeier_PFSr(data = input, delta = 1.3)
 }

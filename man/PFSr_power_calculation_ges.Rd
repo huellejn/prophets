@@ -20,6 +20,9 @@ PFSr_power_calculation_ges(
 
 \item{verbose}{logical value. If TRUE, results output is in text format.}
 }
+\value{
+the calculated required sample size for the defined parameters
+}
 \description{
 Study power calculation using the GES method
 }

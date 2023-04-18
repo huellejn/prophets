@@ -13,7 +13,8 @@
 #'
 #' @examples
 #' data(input)
-#' count_PFSr(data = data)
+#' input$ratio <- input$PFS2/input$PFS1
+#' count_PFSr(data = input)
 count_PFSr <- function(data, 
                        delta = 1, 
                        prob = 0.5 ) {

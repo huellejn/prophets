@@ -19,5 +19,6 @@ Analysis of progression free survival ratio (PFSr) using the parametric method
 }
 \examples{
 data(input)
-parametric_PFSr(data = data, delta = 1.3)
+input$ratio <- input$PFS2/input$PFS1
+parametric_PFSr(data = input, delta = 1.3)
 }

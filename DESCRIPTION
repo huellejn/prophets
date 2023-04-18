@@ -25,6 +25,7 @@ Imports:
     ggthemes,
     parfm,
     tidyr,
-    ggplot2
+    ggplot2,
+    gsDesign
 Depends: 
     R (>= 2.10)

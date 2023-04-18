@@ -17,5 +17,6 @@ Summarise statistics of the PFS values
 }
 \examples{
 data(input)
-summarize_PFS(data = data)
+input$ratio <- input$PFS2/input$PFS1
+summarize_PFS(data = input)
 }

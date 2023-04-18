@@ -21,5 +21,5 @@ Modified progression free survival ratio (mPFSr)
 }
 \examples{
 data(input)
-modify_PFS(data = data, delta = 1.3, min_pfs2 = 6)
+modify_PFS(data = input, delta = 1.3, min_pfs2 = 6)
 }

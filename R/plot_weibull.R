@@ -5,11 +5,13 @@
 #' @return A plot of the Weibull distribution for PFS values
 #' @export
 #' @importFrom survival Surv
-#' @importFrom survminer surv_fit ggsurvplot
+#' @importFrom survminer surv_fit ggsurvplot theme_survminer
+#' @importFrom tidyr gather
+#' @importFrom ggplot2 geom_line
 #'
 #' @examples
 #' data(input)
-#' plot_weibull(data = data)
+#' plot_weibull(data = input)
 plot_weibull <- function(data) {
   
   # Check if required columns are present
@@ -29,7 +31,7 @@ plot_weibull <- function(data) {
                  legend.labs = c("PFS1" ,"PFS2"), 
                  legend.title = "",
                  palette = c("#224DA9", "#E5703D"),
-                 ggtheme = theme_survminer(font.main = 18),
+                 ggtheme = survminer::theme_survminer(font.main = 18),
                  break.time.by = 3)
   
   # Prediction lines
@@ -41,11 +43,11 @@ plot_weibull <- function(data) {
   
   ## Format data
   data_predLines = data.frame(y = seq(.99,.01, by = -.01), line1 = pred.line1, line2 = pred.line2) %>%
-    gather(key = "line", value = "time", -y)
+    tidyr::gather(key = "line", value = "time", -y)
   
   ## Add prediction lines to the plot
   p$plot = p$plot + 
-    geom_line(data = data_predLines, aes(x = time, y = y, group = line))
+    ggplot2::geom_line(data = data_predLines, aes(x = time, y = y, group = line))
   
   return(p)
   
