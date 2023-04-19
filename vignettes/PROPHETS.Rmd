@@ -1,0 +1,227 @@
+---
+title: "PROPHETS"
+author: "Jennifer Huellein"
+date: "2023-04-19"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{PROPHETS}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+devtools::load_all()
+```
+
+```{r setup}
+library(prophets)
+```
+
+# Calculation of sample size and statistical power of the study 
+
+Define desired variables
+```{r}
+delta = 1.3
+alpha = 0.05
+power = 0.8
+rho = 0.5
+alt_HR = 1.33
+null_HR = 1
+k = 1
+lost = 0.1
+model = "GBVE"
+```
+
+
+## Sample size calculation
+
+```{r}
+PFSr_samplesize(
+  alpha = alpha,
+  power = power,
+  rho = rho,
+  alt_HR = alt_HR,
+  null_HR = null_HR,
+  k = k, 
+  lost = lost,
+  model = model,
+  verbose = TRUE)
+```
+
+## Sample size calculation using GES
+
+```{r}
+ges_PFSr_samplesize(
+  ges = 0.3, 
+  alpha = alpha, 
+  power = power, 
+  lost = lost, 
+  verbose = FALSE
+)
+```
+
+## Sample size calculation according to a pre-specified proportion of patients with positive PFSr
+
+```{r}
+PFSr_samplesize_proportion(
+  p0 = 0.15, 
+  p1 = 0.24,
+  alpha = alpha, 
+  beta = 0.1,
+  pfsratio = 1.3, 
+  lost = lost,
+  verbose = TRUE
+)
+
+```
+
+## Calculation of the statistical power of a study with a given sample size
+
+```{r}
+PFSr_power_calculate(
+  sample_size = 165, 
+  null_HR = null_HR,
+  alt_HR = alt_HR, 
+  rho = rho, 
+  alpha = alpha,
+  k = k, 
+  model = model,
+  verbose = TRUE)
+```
+
+## Calculation of the statistical power of a study with a given sample size using GES
+
+```{r}
+PFSr_power_calculation_ges(
+  sample_size = 165, 
+  ges = 0.3, 
+  alpha = alpha,
+  verbose = TRUE
+)
+```
+
+# Analysis of progression free survival ratio
+
+Load example data
+```{r}
+data(input)
+head(input)
+```
+
+Add PFSr
+```{r}
+input$ratio <- input$PFS2 / input$PFS1
+```
+
+Optionally: Use modified PFS values
+```{r}
+data_modifiedPFS <- modify_PFS(input, delta = delta, min_pfs2 = 6)
+```
+
+
+
+## Descriptive analysis of PFSr values
+
+### Swimmer plot
+
+```{r}
+swimmerplot_PFSr(
+    input, 
+    delta = delta)
+```
+
+
+### Correlation between PFS1 and PFS2
+
+```{r}
+plot_correlation_PFS(
+  input, 
+  delta = delta,
+  log_scale = FALSE
+)
+```
+
+### Cumulative hazard ratio
+
+```{r}
+plot_cumHaz(
+  input,  
+  selected_PFS = c("PFS1", "PFS2") 
+)
+```
+
+### Plot Weibull
+
+```{r}
+plot_weibull(input)
+```
+
+
+## Methods for calculation of significant PFSr
+
+
+### Count-based method
+
+```{r}
+res_countPFSr <- count_PFSr(
+  data = input,
+  delta = delta,
+  prob = 0.5
+  )
+
+res_countPFSr
+```
+
+
+### Kaplan-Meier-based method
+
+```{r}
+res_kaplanMeierPFSr <- kaplanMeier_PFSr(
+  data = input,
+  delta = delta,
+  plot = TRUE
+)
+
+res_kaplanMeierPFSr
+```
+
+
+### Parametric method
+
+```{r}
+res_parametricPFSr <- parametric_PFSr(
+  data = input,
+  delta = delta
+)
+
+res_parametricPFSr
+```
+
+
+### Midrank-based method
+
+```{r}
+res_midrankPFSr <- midrank_PFSr(
+  data = input, 
+  delta = delta
+)
+
+res_midrankPFSr
+```
+
+
+### Summary of all methods
+
+```{r}
+res_summary <- prophets_summary(
+  data = input,
+  delta = delta
+)
+
+res_summary
+```
+
