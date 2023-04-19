@@ -11,6 +11,8 @@
 #' @importFrom gtsummary tbl_survfit
 #' @importFrom survminer ggsurvplot
 #' @importFrom broom glance
+#' @importFrom ggplot2 geom_label geom_segment
+#' @importFrom grid unit
 #'
 #' @examples
 #' data(input)
@@ -52,20 +54,20 @@ kaplanMeier_PFSr <- function(data,
                             risk.table = FALSE)
       
       plot_km <- plot_km$plot + 
-        geom_segment(aes(x = 0, y = res_stats$estimate, xend = delta, yend = res_stats$estimate), 
+        ggplot2::geom_segment(aes(x = 0, y = res_stats$estimate, xend = delta, yend = res_stats$estimate), 
                      colour = "#E5703D", 
                      linetype = "dashed",
                      size = 0.3, 
                      alpha = 0.8) +
-        geom_segment(aes(x = delta, y = 0, xend = delta, yend = res_stats$estimate), 
+        ggplot2::geom_segment(aes(x = delta, y = 0, xend = delta, yend = res_stats$estimate), 
                      colour = "#E5703D", 
                      linetype = "dashed",
                      size = 0.3, 
                      alpha = 0.8) + 
-        geom_label(label = paste("At ∂ = ", delta, ", S(", delta, ") :", round(res_stats$estimate,2), sep = ""), 
+        ggplot2::geom_label(label = paste("At ∂ = ", delta, ", S(", delta, ") :", round(res_stats$estimate,2), sep = ""), 
                    x = delta+1, 
-                   y = aa$estimate + aa$estimate/2,
-                   label.padding = unit(0.25, "lines"), 
+                   y = res_stats$estimate + res_stats$estimate/2,
+                   label.padding = grid::unit(0.25, "lines"), 
                    label.size = 0.35,
                    color = "black",
                    fill="white"

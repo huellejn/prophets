@@ -26,7 +26,7 @@ plot_correlation_PFS <- function(data,
   tau <- parfm::tau(glm)
   
   p <- data %>% 
-    dplyr::mutate(pfsr_delta = ifelse(ratio > delta, "above", "below")) %>% 
+    dplyr::mutate(pfsr_delta = ifelse(ratio > {{delta}}, "above", "below")) %>% 
     ggplot2::ggplot(aes(x = PFS1, y = PFS2, color = pfsr_delta, fill = pfsr_delta, size = ratio)) + 
     geom_point(alpha = 0.7)+
     scale_color_manual(values = c("#E5703D", "grey60")) +
