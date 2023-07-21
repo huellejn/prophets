@@ -26,7 +26,7 @@ In recent years, a detailed exploration of PFSratio statistical properties has b
 
 The prophets pipeline is here summarized, from exploration of paired failure times to PFSratio analysis and PFSratio-based power/sample size calculation for trial design.
 
-Detailed descriptions of each method can be found in the literature cited in the documentation.
+Detailed descriptions of each method can be found in the literature cited in the manuscript.
 
 ## Installation
 
@@ -276,6 +276,9 @@ PFSr_power_calculate(
 # - and a moderate (0.5) correlation between PFS1 and PFS2,
 # the study power for the PFSratio-based analysis is of: 84%  
 ```
+## Shiny app
+
+A Shiny app version of the package, as a user-friendly web calculator for clinicians and statisticians that aim to explore *PROPHETS* without the burden of R-based coding, is available at https://federico-nichetti.shinyapps.io/prophetsshiny/
 
 # Citation
 
