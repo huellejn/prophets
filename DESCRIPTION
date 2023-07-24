@@ -2,8 +2,8 @@ Package: prophets
 Title: PROPHETS: a R package to exploit PROgression-free survival ratio as primary endpoint in PHasE 2 TrialS in oncology
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+    person("Federico", "Nichetti", , "federico.nichetti@istitutotumori.mi.it", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-8044-4207"))
 Description: prophets is an R-Package which is developed to collect and implement different methods for the design and analysis of trials that use PFSratio as their primary endpoint. It provides a convenient wrapper around existing methods to calculate and plot PFSratio-based results.
 License: GPL (>= 3)
 Encoding: UTF-8
