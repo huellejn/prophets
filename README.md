@@ -8,7 +8,7 @@
 
 # *PROPHETS*: PROgression-free survival ratio as primary endpoint in PHasE 2 TrialS in oncology
 
-Authors: Federico Michetti, Jennifer Hüllein
+Authors: Federico Nichetti, Jennifer Hüllein
 
 ## Description
 
