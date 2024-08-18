@@ -1,4 +1,4 @@
-#' Title
+#' Generate a summary of all survival statistics
 #'
 #' @param data a dataframe with columns 'PFS1' (numeric), 'PF2' (numeric)
 #' @param delta a numeric value. The value 'delta' is the desired difference between PFS2 and PFS1 that is seen as a success.
@@ -11,6 +11,9 @@
 #' input$ratio <- input$PFS2/input$PFS1
 #' prophets_summary(data = input, delta = 1.3)
 prophets_summary <- function(data, 
+                             points = NULL,
+                             conf.int = FALSE,
+                             n.boot = 2000,
                              delta = 1) {
   
   # Check if required columns are present
@@ -20,6 +23,22 @@ prophets_summary <- function(data,
   res_kaplanMeierPFSr <- kaplanMeier_PFSr(data = data, delta = delta, plot = FALSE)[["PFSr_estimator"]]
   res_parametricPFSr <- parametric_PFSr(data = data, delta = delta)
   res_midrankPFSr <- midrank_PFSr(data = data, delta = delta)
-  res <- rbind(res_countPFSr, res_kaplanMeierPFSr, res_parametricPFSr, res_midrankPFSr) 
+  res_kernelPFSr <- kernelKM_PFSr(data = data, points = points, conf.int = conf.int, n.boot = n.boot)
+  # Format the results from the kernelKM method as data.frame
+  if(all(c("low.med", "upp.med") %in% names(res_kernelPFSr))) {
+    conf.low = res_kernelPFSr$low.med
+    conf.high = res_kernelPFSr$upp.med
+  } else {
+    conf.low = NA
+    conf.high = NA
+    }
+  df_res_kernelPFSr <- data.frame(
+    method = "kernelKM",
+    delta = NA,
+    estimate = res_kernelPFSr$med,
+    conf.low = conf.low,
+    conf.high = conf.high
+  )
+  res <- rbind(res_countPFSr, res_kaplanMeierPFSr, res_parametricPFSr, res_midrankPFSr, df_res_kernelPFSr) 
   return(res)
 }
