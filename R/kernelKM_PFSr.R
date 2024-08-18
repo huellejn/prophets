@@ -4,9 +4,9 @@
 #' @param ratio.name name of the column that contains the PFS1/PFS2 ratio ('numeric')
 #' @param status.name name of the column that contains the status ('boolean')
 #' @param time0.name name of the column that contains the PFS1 ('numeric')
-#' @param points 
+#' @param delta a numeric value indicating the desired difference between PFS2 and PFS1 that is seen as a success. 
 #' @param conf.int a boolean indicating if confidende intervals should be calculated
-#' @param n.boot number of permutations
+#' @param n.boot an integer value indicating the number of permutations to obtain confidence intervals for the survival estimates
 #'
 #' @return a Kaplan-Meier based statistics according to the kernel conditional KM method
 #' @export
@@ -15,8 +15,8 @@
 #' # Example with default values:
 #' kernelKM_PFSr(data, "ratio", "status", "PFS1")
 #' # Example with modified values
-#' kernelKM_PFSr(data, "ratio", "status", "PFS1", points = 2, conf.int = TRUE)
-kernelKM_PFSr <- function(data, ratio.name = "ratio", status.name = "status", time0.name = "PFS1", points = NULL, conf.int = FALSE, n.boot = 2000) {
+#' kernelKM_PFSr(data, "ratio", "status", "PFS1", delta = 2, conf.int = TRUE)
+kernelKM_PFSr <- function(data, ratio.name = "ratio", status.name = "status", time0.name = "PFS1", delta = NULL, conf.int = FALSE, n.boot = 2000) {
   
   result = estimator(data, ratio.name, status.name, time0.name)
   ratio = result$ratio
@@ -44,12 +44,12 @@ kernelKM_PFSr <- function(data, ratio.name = "ratio", status.name = "status", ti
     
   }
   
-  # If points is not null
-  if( !is.null(points) ) {
+  # If delta is not null
+  if( !is.null(delta) ) {
     
-    index = apply(outer(ratio, points, "<="), 2, sum)
+    index = apply(outer(ratio, delta, "<="), 2, sum)
     surv.points = surv[index]
-    ind = which(points > max(data[[ratio.name]]))
+    ind = which(delta > max(data[[ratio.name]]))
     
     if( length(ind) > 0 ) {
       
@@ -60,7 +60,7 @@ kernelKM_PFSr <- function(data, ratio.name = "ratio", status.name = "status", ti
       
     }
     
-    res = c(res, list(points=points, surv.points=surv.points))
+    res = c(res, list(delta=delta, surv.points=surv.points))
     
     if(conf.int) {
       
