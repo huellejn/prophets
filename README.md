@@ -196,13 +196,14 @@ res_summary <- prophets_summary(
 
 res_summary
 
-# # A tibble: 4 × 5
-#   method       delta estimate conf.low conf.high
-#   <chr>        <dbl>    <dbl>    <dbl>     <dbl>
-# 1 count-based    1.3    0.194   0.104      0.314
-# 2 Kaplan-Meier   1.3    0.201   0.122      0.332
-# 3 parametric     1.3    0.168   0.0516     0.284
-# 4 midrank        1.3    0.2     0.103      0.297
+# A tibble: 5 × 5
+  method       delta estimate conf.low conf.high
+  <chr>        <dbl>    <dbl>    <dbl>     <dbl>
+1 count-based    1.3    0.194   0.104      0.314
+2 Kaplan Meier   1.3    0.201   0.122      0.332
+3 parametric     1.3    0.168   0.0516     0.284
+4 midrank        1.3    0.2     0.103      0.297
+5 kernelKM       1.3    0.199   0.108      0.309
 ```
 
 ## PFSratio-based clinical trial design
