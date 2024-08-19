@@ -23,7 +23,7 @@ prophets_summary <- function(data,
   res_kaplanMeierPFSr <- kaplanMeier_PFSr(data = data, delta = delta, plot = FALSE)[["PFSr_estimator"]]
   res_parametricPFSr <- parametric_PFSr(data = data, delta = delta)
   res_midrankPFSr <- midrank_PFSr(data = data, delta = delta)
-  res_kernelPFSr <- kernelKM_PFSr(data = data, points = points, conf.int = conf.int, n.boot = n.boot)
+  res_kernelPFSr <- kernelKM_PFSr(data = data, delta = delta, conf.int = conf.int, n.boot = n.boot)
   # Format the results from the kernelKM method as data.frame
   if(all(c("low.med", "upp.med") %in% names(res_kernelPFSr))) {
     conf.low = res_kernelPFSr$low.med
