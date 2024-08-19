@@ -38,7 +38,7 @@ kaplanMeier_PFSr <- function(data,
   
   rs <- summary(obj_survfit, times = delta)
   res_stats <- tibble(
-    Method= "Kaplan Meier", 
+    method= "Kaplan Meier", 
     delta = rs$time,
     estimate = rs$surv,
     
