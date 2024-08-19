@@ -11,8 +11,8 @@
 #' input$ratio <- input$PFS2/input$PFS1
 #' prophets_summary(data = input, delta = 1.3)
 prophets_summary <- function(data, 
-                             points = NULL,
-                             conf.int = FALSE,
+                             #points = NULL,
+                             # conf.int = FALSE,
                              n.boot = 2000,
                              delta = 1) {
   
@@ -23,19 +23,19 @@ prophets_summary <- function(data,
   res_kaplanMeierPFSr <- kaplanMeier_PFSr(data = data, delta = delta, plot = FALSE)[["PFSr_estimator"]]
   res_parametricPFSr <- parametric_PFSr(data = data, delta = delta)
   res_midrankPFSr <- midrank_PFSr(data = data, delta = delta)
-  res_kernelPFSr <- kernelKM_PFSr(data = data, delta = delta, conf.int = conf.int, n.boot = n.boot)
+  res_kernelPFSr <- kernelKM_PFSr(data = data, delta = delta, conf.int = T, n.boot = n.boot)
   # Format the results from the kernelKM method as data.frame
-  if(all(c("low.med", "upp.med") %in% names(res_kernelPFSr))) {
-    conf.low = res_kernelPFSr$low.med
-    conf.high = res_kernelPFSr$upp.med
-  } else {
-    conf.low = NA
-    conf.high = NA
-    }
+ # if(all(c("low.points", "upp.points") %in% names(res_kernelPFSr))) {
+    conf.low = res_kernelPFSr$low.points
+    conf.high = res_kernelPFSr$upp.points
+  # } else {
+  #   conf.low = NA
+  #   conf.high = NA
+  #   }
   df_res_kernelPFSr <- data.frame(
     method = "kernelKM",
-    delta = NA,
-    estimate = res_kernelPFSr$med,
+    delta = delta,
+    estimate = res_kernelPFSr$surv.points,
     conf.low = conf.low,
     conf.high = conf.high
   )
