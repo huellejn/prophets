@@ -20,7 +20,6 @@ b)  design of single-arm trials with limited sample size, and
 
 c)  provision of a clinically relevant estimate of benefit of a new treatment.
 
-In recent years, a detailed exploration of PFSratio statistical properties has been performed, to correctly adopt it for the design and subsequent analysis of a trial, but the methods remained scattered and difficult to interpret for clinicians. Moreover, several PO trials explored PFSratio as a measure of benefit, but different methods have been adopted, making the results poorly comparable.
 
 `prophets` is an R-Package which is developed to collect and implement different methods for the design and analysis of trials that use PFSratio as their primary endpoint. It provides a convenient wrapper around existing methods to calculate and plot PFSratio-based results.
 
@@ -155,7 +154,7 @@ plot_cumHaz(
 ## Methods for PFSratio-based analysis
 
 Whatever the choice of 𝛿, a study that is based on PFSratio as an efficacy endpoint is aimed at estimating the probability that this ratio is equal to or greater than 𝛿, i.e. P(PFSratio≥𝛿), or S~PFSratio~(𝛿) more compactly. S~PFSratio~(𝛿) (and its confidence interval, CI) thus represents the probability of having a ratio > 𝛿, which can be interpreted as the fraction of patients from a given cohort with a clinically relevant improvement of PFS2 relative to PFS1.
-As described extensively in our work, there are multiple methods that can be used to estimate S~PFSratio~(𝛿). To date, 4 methods are implemented in `prophets`, namely the count-based (`res_countPFSr`), kaplan-meier (`res_kaplanMeierPFSr`), parametric (`res_parametricPFSr`) and midrank (`res_midrankPFSr`). Here, the kaplan-meier is used for the example, together with its respective plot. 
+As described extensively in our work, there are multiple methods that can be used to estimate S~PFSratio~(𝛿). To date, 5 methods are implemented in `prophets`, namely the count-based (`res_countPFSr`), kaplan-meier (`res_kaplanMeierPFSr`), parametric (`res_parametricPFSr`), midrank (`res_midrankPFSr`) and kernel-based kaplan-meier. Here, the kaplan-meier is used for the example, together with its respective plot. 
 
 ### Kaplan-Meier-based method
 

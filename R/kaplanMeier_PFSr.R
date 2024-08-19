@@ -30,11 +30,21 @@ kaplanMeier_PFSr <- function(data,
   res_summary <- broom::glance(obj_survfit) %>%
     dplyr::select(records, events, median, conf.low, conf.high)
   
-  res_stats <- tbl_survfit(
-    obj_survfit,
-    times = delta)$meta_data$df_stats[[1]] %>% 
-    dplyr::mutate(method = "Kaplan-Meier") %>% 
-    dplyr::select(method, delta = time, estimate, conf.low, conf.high)
+  # res_stats <- tbl_survfit(
+  #   obj_survfit,
+  #   times = delta)$meta_data$df_stats[[1]] %>% 
+  #   dplyr::mutate(method = "Kaplan-Meier") %>% 
+  #   dplyr::select(method, delta = time, estimate, conf.low, conf.high)
+  
+  rs <- summary(obj_survfit, times = delta)
+  res_stats <- tibble(
+    Method= "Kaplan Meier", 
+    delta = rs$time,
+    estimate = rs$surv,
+    
+    conf.low = rs$lower,
+    conf.high = rs$upper
+  )
   
   res_list <- list(PFSr_summary = res_summary, PFSr_estimator = res_stats)
   
