@@ -32,9 +32,7 @@ Detailed descriptions of each method can be found in the literature cited in the
 The developmental version can be installed using the `devtools` R-Package:
 
 ``` r
-library(devtools)
-
-devtools::install_github("https://github.com/huellejn/prophets")
+remotes::install_github("https://github.com/huellejn/prophets")
 ```
 
 ## Bug Reports and Feature Requests
