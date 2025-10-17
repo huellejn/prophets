@@ -7,6 +7,7 @@
 #' @param delta a numeric value indicating the desired difference between PFS2 and PFS1 that is seen as a success.
 #' @param conf.int a boolean indicating if confidende intervals should be calculated
 #' @param n.boot an integer value indicating the number of permutations to obtain confidence intervals for the survival estimates
+#' @param tibble a boolean indicating if the results should be returned as a tibble.
 #'
 #' @return a Kaplan-Meier based statistics according to the kernel conditional KM method
 #' @export
