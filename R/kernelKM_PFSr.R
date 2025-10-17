@@ -13,18 +13,20 @@
 #'
 #' @examples
 #' # Example with default values:
-#' kernelKM_PFSr(data, "ratio", "status", "PFS1")
+#' kernelKM_PFSr(data)
 #' # Example with modified values
-#' kernelKM_PFSr(data, "ratio", "status", "PFS1", delta = 2, conf.int = TRUE)
+#' kernelKM_PFSr(data, ratio.name = "ratio", status.name = "status", time0.name = "PFS1", delta = 2, conf.int = TRUE, tibble = TRUE)
 kernelKM_PFSr <- function(
   data,
-  ratio.name,
-  status.name,
-  time0.name,
+  ratio.name = "ratio",
+  status.name = "status",
+  time0.name = "PFS1",
   delta = NULL,
   conf.int = FALSE,
-  n.boot = 2000
+  n.boot = 2000,
+  tibble = FALSE
 ) {
+
   # Get base estimates
   result <- estimator(data, ratio.name, status.name, time0.name)
   ratio <- result$ratio
@@ -32,14 +34,18 @@ kernelKM_PFSr <- function(
 
   # Calculate median survival
   medsurv <- ifelse(min(surv) > 0.5, NA, ratio[sum(surv > 0.5) + 1])
+  result[["median PFSratio"]] <- medsurv
 
   # Helper function to get survival at delta points
   get_surv_at_delta <- function(surv_vec, ratio, delta, data, ratio.name) {
+
     index <- apply(outer(ratio, delta, "<="), 2, sum)
+
     surv_points <- surv_vec[index]
 
     # Handle values beyond data range
     ind <- which(delta > max(data[[ratio.name]]))
+
     if (length(ind) > 0) {
       surv_points[ind] <- NA
       message(
@@ -48,63 +54,57 @@ kernelKM_PFSr <- function(
         " (max PFSratio in data)"
       )
     }
-
-    surv_points
+    return(surv_points)
   }
 
-  # Without confidence intervals
-  if (!conf.int) {
-    if (!is.null(delta)) {
-      surv_points <- get_surv_at_delta(surv, ratio, delta, data, ratio.name)
-      return(list(
-        ratio = ratio,
-        surv = surv,
-        `median PFSratio` = medsurv,
-        delta = delta,
-        `PFSr_estimator` = surv_points
-      ))
-    }
-    return(list(ratio = ratio, surv = surv, `median PFSratio` = medsurv))
-  }
-
-  # With confidence intervals
-  bootresult <- boot(n.boot, data, ratio.name, status.name, time0.name, ratio)
-  se <- bootresult$se
-
-  # Calculate confidence bounds
-  log_transform <- log(-log(surv[-1]))
-  se_ratio <- se[-1] / (surv[-1] * log(surv[-1]))
-
-  low <- c(1, exp(-exp(log_transform - 1.96 * se_ratio)))
-  upp <- c(1, exp(-exp(log_transform + 1.96 * se_ratio)))
-
-  if (!is.null(delta)) {
-    # Get point estimates at delta
+  # Get survival at delta points
+  if( !is.null(delta) ) {
     surv_points <- get_surv_at_delta(surv, ratio, delta, data, ratio.name)
-    index <- apply(outer(ratio, delta, "<="), 2, sum)
-
-    out <- tibble(
-      delta = delta,
-      estimate = surv_points,
-      conf.low = low[index],
-      conf.high = upp[index]
-    )
-
-    survtab <- tibble(
-      `median PFSratio` = medsurv,
-      conf.low = bootresult$low.med,
-      conf.high = bootresult$upp.med
-    )
-
-    return(list(`median PFSratio` = survtab, `PFSr_estimator` = out))
+    result[["delta"]] <- delta
+    result[["estimator"]] <- surv_points
   }
 
-  list(
-    ratio = ratio,
-    surv = surv,
-    se = se,
-    low = low,
-    upp = upp,
-    `median PFSratio` = medsurv
-  )
+  # Calculate confidence intervals
+  if( conf.int == TRUE ) {
+
+    bootresult <- boot(n.boot, data, ratio.name, status.name, time0.name, ratio)
+    se <- bootresult$se
+
+    # Calculate confidence bounds
+    log_transform <- log(-log(surv[-1]))
+    se_ratio <- se[-1] / (surv[-1] * log(surv[-1]))
+    low <- c(1, exp(-exp(log_transform - 1.96 * se_ratio)))
+    upp <- c(1, exp(-exp(log_transform + 1.96 * se_ratio)))
+
+    result[["bootresults"]] <- bootresult
+    result[["low"]] <- low
+    result[["upp"]] <- upp
+
+    if( !is.null(delta) ) {
+      index <- apply(outer(ratio, delta, "<="), 2, sum)
+      result[["conf.low"]] <- low[index]
+      result[["conf.high"]] <- upp[index]
+    }
+
+  }
+
+  if( tibble == TRUE ) {
+
+    res_delta <- ifelse("delta" %in% names(result), result[["delta"]], NA)
+    res_estimator <- ifelse("estimator" %in% names(result), result[["estimator"]], NA)
+    res_med <- ifelse("median PFSratio" %in% names(result), result[["median PFSratio"]], NA)
+    res_conf.low <- ifelse("conf.low" %in% names(result), result[["conf.low"]], NA)
+    res_conf.upp <- ifelse("conf.high" %in% names(result), result[["conf.high"]], NA)
+
+    result <- tibble::tibble(
+      delta = res_delta, 
+      estimate = res_estimator, 
+      `median PFSratio` = res_med,
+      conf.low = res_conf.low, 
+      conf.upp = res_conf.upp
+    )
+  }
+
+  return(result)
+
 }
